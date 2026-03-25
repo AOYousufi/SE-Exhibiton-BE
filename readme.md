@@ -1,80 +1,87 @@
-# Virtual Exhibition - Back-End 🚀
+# Virtual Exhibition — Backend API
 
-Welcome to the back-end of the Virtual Exhibition Platform. This service powers our interactive art exhibition platform by securely integrating multiple museum APIs and handling all data operations with robust error handling and user feedback.
-
----
-
-## Project Summary
-
-The back-end of the Exhibition Curation Platform connects to at least two museum/university APIs, processes artwork data, and exposes RESTful endpoints for managing user exhibition collections. It features:
-
-- **Secure API Integration:** Connects to multiple APIs with proper key management.
-- **Robust Error Handling:** Provides clear error messages and loading indicators.
-- **RESTful Endpoints:** Facilitates operations such as creating, updating, and retrieving user collections.
-- **Simple Environment Setup:** Easily configured using a straightforward `.env` file.
-
----
-
-## Prerequisites
-
-- [Node.js](https://nodejs.org/) (v14+)
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
-
----
-
-## Installation
-
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/Sultan0013/SE-Exhibiton-BE
-   cd SE-Exhibiton-BE
-   npm install
-   ```
-
-## 🔧 Set Up the Environment File
-
-**Step 1:** Create a copy of the sample environment file:
-
-**Step 2:** Open the `.env` file in your favourite editor. It should contain:
-
-```env
-PORT=4157
-HARVARD_API_KEY=YOUR_HARVARD_API_KEY_HERE
-HARVARD_BASE_URL=https://api.harvardartmuseums.org
-VNA_BASE_URL=https://api.vam.ac.uk/v2
-```
-
-**Important:**
-
-- Replace `YOUR_HARVARD_API_KEY_HERE` with your own Harvard API key.
-- You can obtain a free API key by signing up at the [Harvard Art Museums API website](https://docs.google.com/forms/d/e/1FAIpQLSfkmEBqH76HLMMiCC-GPPnhcvHC9aJS86E32dOd0Z8MpY2rvQ/viewform).
-- The other environment variables (`PORT`, `HARVARD_BASE_URL`, and `VNA_BASE_URL`) are pre-configured.
-
----
-
-## 🏃‍♂️ Run the Server Locally
-
-Start the server using:
-
-```bash
-node server.js
-```
-
-The server should now be running at [http://localhost:4157](http://localhost:4157) (or on the port you have configured).
+A backend service that aggregates artwork data from multiple museum APIs and exposes RESTful endpoints for the Virtual Exhibition platform. Users can browse and search artworks from the Harvard Art Museums and Victoria & Albert Museum in a single unified API.
 
 ---
 
 ## 🔗 Links
 
-- **Front-end GitHub Repository:** [Virtual Exhibition Front-End](https://github.com/Sultan0013/Virtual-Exhibiton)
-- **Hosted Back-End:** [Live Back-End](https://se-exhibiton-be-dawn-grass-6783.fly.dev/)
+- **Live API:** [se-exhibiton-be-dawn-grass-6783.fly.dev](https://se-exhibiton-be-dawn-grass-6783.fly.dev/)
+- **Frontend Repo:** [github.com/Sultan0013/Virtual-Exhibiton](https://github.com/Sultan0013/Virtual-Exhibiton)
+- **Live Site:** [mueseumexhibition.netlify.app](https://mueseumexhibition.netlify.app/)
 
-  The back-end provides two primary GET endpoints for accessing artwork data:
-  **GET /api/all-artworks**: Retrieves a list of artworks from the Harvard Art Museums API and the V&A API.
-  **GET /api/artwork/:id**: Retrieves detailed information for a specific artwork.
+---
 
-- ## **Hosted Front-End:** [Live Front-End](https://mueseumexhibition.netlify.app/)
+## 🛠 Tech Stack
 
-## 🎨 Acknowledgments
+| Layer | Technology |
+|---|---|
+| Runtime | Node.js |
+| Framework | Express.js |
+| External APIs | Harvard Art Museums, Victoria & Albert Museum |
+| Hosting | Fly.io |
 
-Special thanks to the Harvard Museum and the Victoria and Albert Museum APIs that power this platform. Their extensive and high-quality data make it possible for art enthusiasts, researchers, and students to explore and appreciate the world of art. We appreciate their commitment to sharing cultural heritage and academic resources with the public.
+---
+
+## 📡 API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/all-artworks` | Fetch artworks from both Harvard and V&A APIs |
+| GET | `/api/artwork/:id` | Get detailed info for a specific artwork |
+
+---
+
+## ⚙️ Local Setup
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/Sultan0013/SE-Exhibiton-BE.git
+cd SE-Exhibiton-BE
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Create environment file
+
+Create a `.env` file at the project root with the following:
+
+```env
+PORT=4157
+HARVARD_API_KEY=your_harvard_api_key_here
+HARVARD_BASE_URL=https://api.harvardartmuseums.org
+VNA_BASE_URL=https://api.vam.ac.uk/v2
+```
+
+> Get a free Harvard API key here: [Harvard Art Museums API signup](https://docs.google.com/forms/d/e/1FAIpQLSfkmEBqH76HLMMiCC-GPPnhcvHC9aJS86E32dOd0Z8MpY2rvQ/viewform)
+> The V&A API is public and requires no key.
+> This file is gitignored — never commit it.
+
+### 4. Start the server
+
+```bash
+node server.js
+```
+
+Server runs at [http://localhost:4157](http://localhost:4157)
+
+---
+
+## Requirements
+
+- Node.js `v14+`
+
+---
+
+## Data Sources
+
+- [Harvard Art Museums API](https://harvardartmuseums.org/collections/api)
+- [Victoria and Albert Museum API](https://www.vam.ac.uk/api)
+
+---
+
