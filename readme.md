@@ -7,7 +7,7 @@ A backend service that aggregates artwork data from multiple museum APIs and exp
 ## 🔗 Links
 
 - **Live API:** [se-exhibiton-be-dawn-grass-6783.fly.dev](https://se-exhibiton-be-dawn-grass-6783.fly.dev/)
-- **Frontend Repo:** [github.com/Sultan0013/Virtual-Exhibiton](https://github.com/Sultan0013/Virtual-Exhibiton)
+- **Frontend Repo:** [github.com/AOYousufi/Virtual-Exhibition](https://github.com/AOYousufi/Virtual-Exhibition)
 - **Live Site:** [mueseumexhibition.netlify.app](https://mueseumexhibition.netlify.app/)
 
 ---
@@ -37,7 +37,7 @@ A backend service that aggregates artwork data from multiple museum APIs and exp
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/Sultan0013/SE-Exhibiton-BE.git
+git clone https://github.com/AOYousufi/SE-Exhibiton-BE.git
 cd SE-Exhibiton-BE
 ```
 
