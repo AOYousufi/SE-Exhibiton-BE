@@ -27,7 +27,8 @@ A backend service that aggregates artwork data from multiple museum APIs and exp
 
 | Method | Endpoint | Description |
 |---|---|---|
-| GET | `/api/all-artworks` | Fetch artworks from both Harvard and V&A APIs |
+| GET | `/api/health` | Lightweight readiness check, returns `{ "status": "ok" }` |
+| GET | `/api/all-artworks?q=portrait&page=1` | Search Harvard and V&A artworks (partial results if one source fails) |
 | GET | `/api/artwork/:id` | Get detailed info for a specific artwork |
 
 ---
@@ -68,13 +69,31 @@ VNA_BASE_URL=https://api.vam.ac.uk/v2
 node server.js
 ```
 
-Server runs at [http://localhost:4157](http://localhost:4157)
+Server runs at [http://localhost:4157](http://localhost:4157).
+
+### Input rules
+
+- `q` is required, trimmed, maximum 150 characters.
+- `page` is a positive integer, maximum 10000; defaults to 1.
+- `minResults` is an optional per-page cap from 1 to 40; defaults to 20.
+- `sortOrder` accepts `asc` or `desc`.
+- Filters (`classification`, `technique`, `sortOpt`) accept the frontend's museum-specific nested objects.
+- Responses keep the `artworks` and `hasNextPage` keys. Each request fetches one page from each museum to avoid repeating artwork records across pages.
+- Returns HTTP 400 for invalid input, 404 for missing artwork IDs, and 503 if both museums fail.
+
+### Tests
+
+```bash
+npm test
+```
+
+GitHub Actions runs API syntax and input-validation checks. These smoke tests do not contact the museum APIs; production integration still needs checking with real API credentials.
 
 ---
 
 ## Requirements
 
-- Node.js `v14+`
+- Node.js `v20+` recommended (CI uses Node 22)
 
 ---
 
