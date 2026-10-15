@@ -124,6 +124,9 @@ app.get("/api/all-artworks", async (req, res) => {
 
 app.get("/api/artwork/:id", async (req, res) => {
   const { id } = req.params;
+  if (!/^[a-zA-Z0-9_-]{1,50}$/.test(id)) {
+    return res.status(400).json({ error: "Invalid artwork ID." });
+  }
   try {
     let artworkDetails = null;
 
@@ -145,7 +148,7 @@ app.get("/api/artwork/:id", async (req, res) => {
           throw error;
         });
       if (!response.data.record) {
-        return res.json({});
+        return res.status(404).json({ error: "Artwork not found." });
       }
       const { data } = response;
       const record = data.record;
@@ -153,9 +156,11 @@ app.get("/api/artwork/:id", async (req, res) => {
       artworkDetails = {
         id: record.systemNumber,
         image:
-          meta.images?._iiif_image + "full/full/0/default.jpg" ||
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMZG9cIFLAsgK_y9kGQ_HBZZ5ADp1GQq4OYQ&s",
+          meta?.images?._iiif_image
+            ? meta.images._iiif_image.replace(/\/$/, "") + "/full/full/0/default.jpg"
+            : "",
         title: record.titles?.[0]?.title || "No Title Available",
+        artist: record.artistMakerPerson?.[0]?.name?.text || "",
         date: record.productionDates?.[0]?.date?.text || "Unknown",
         medium: record.materialsAndTechniques || "Not specified",
         dimensions: record.dimensions
@@ -194,15 +199,15 @@ app.get("/api/artwork/:id", async (req, res) => {
           throw error;
         });
       if (!response.data.title && !response.data.objectid) {
-        return res.json({});
+        return res.status(404).json({ error: "Artwork not found." });
       }
       const { data } = response;
       artworkDetails = {
         id: data.objectid || data.id,
         image:
-          data.primaryimageurl ||
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMZG9cIFLAsgK_y9kGQ_HBZZ5ADp1GQq4OYQ&s",
+          data.primaryimageurl || "",
         title: data.title || data.titles?.[0]?.title || "No Title Available",
+        artist: data.people?.map((person) => person.name).filter(Boolean).join(", ") || "",
         date: data.dated || "Unknown",
         medium: data.medium || "Not specified",
         dimensions: data.dimensions || "Not provided",
@@ -229,5 +234,5 @@ app.get("/api/artwork/:id", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log("listening on port " + { PORT });
+  console.log("listening on port " + PORT);
 });
